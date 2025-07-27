@@ -1,4 +1,4 @@
-Org: "Hicks Thermometer"
-Tagline: "An instrument of Thought"
+Org: "LIC"
+Tagline: "Zindagi ke sath bhi, zindagi ke baad bhi"
 Mobile: "+91-8384882675"
 Address: "Sasni Gate, Aligarh"
