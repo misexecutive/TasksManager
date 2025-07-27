@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Task Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+    // jwt_decode function is kept as it's essential for decoding the Google credential
+    function jwt_decode(token) {
+      var parts = token.split('.');
+      if (parts.length !== 3) throw new Error('JWT must have 3 parts');
+      const payload = parts[1];
+      return JSON.parse(decodeURIComponent(atob(payload.replace(/-/g, '+').replace(/_/g, '/')).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join('')));
+    }
+  </script>
+
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="flex-center">
+  <div class="auth-card">
+    <h1 class="text-3xl font-bold mb-6 text-gray-800">Welcome to Task Manager</h1>
+    <p class="mb-6 text-gray-600">Please sign in to continue.</p>
+
+    <!-- Google Sign-In button remains the primary interactive element -->
+    <div id="g_id_onload"
+         data-client_id="616810582188-ctb585d8hn3r20n5pb5atra47vgpqldt.apps.googleusercontent.com"
+         data-callback="handleCredentialResponse"
+         data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+         data-type="standard"
+         data-size="large"
+         data-theme="outline"
+         data-text="sign_in_with"
+         data-shape="rectangular"
+         data-logo_alignment="left">
+    </div>
+  </div>
+
+  <!-- Loader Overlay -->
+  <div id="loader-overlay" class="loader-overlay">
+      <div class="spinner"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Custom Modal for Alerts/Confirmations -->
+  <div id="custom-modal-overlay" class="custom-modal-overlay">
+      <div class="custom-modal-content">
+          <h3 id="modal-title"></h3>
+          <p id="modal-message"></p>
+          <div id="modal-buttons" class="custom-modal-buttons">
+              <!-- Buttons will be injected here by JS -->
+          </div>
+      </div>
+  </div>
+
+  <!-- Link to portal.js -->
+  <script src="js/portal.js"></script>
+  <script src="js/ui-helpers.js"></script> <!-- New helper script for UI elements -->
+</body>
+</html>

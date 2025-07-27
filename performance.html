@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Weekly Performance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <script>
+    function jwt_decode(token) {
+      var parts = token.split('.');
+      if (parts.length !== 3) throw new Error('JWT must have 3 parts');
+      const payload = parts[1];
+      return JSON.parse(decodeURIComponent(atob(payload.replace(/-/g, '+').replace(/_/g, '/')).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join('')));
+    }
+  </script>
+
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body class="p-6 font-sans" onload="initializePerformancePage()">
+  <div class="container">
+    <h1 class="text-2xl font-bold mb-4">Hello, <span id="userName"></span> <i class="fas fa-user-circle fa-icon"></i></h1>
+    <h2 class="text-xl font-semibold mb-2">This Week's Performance <i class="fas fa-chart-line fa-icon"></i></h2>
+
+    <div id="summaryBox" class="summary-box">
+      <p><strong>Total Tasks:</strong> <span id="total"></span> <i class="fas fa-tasks"></i></p>
+      <p class="status-on-time"><strong>On Time:</strong> <span id="onTime"></span> <i class="fas fa-check-circle"></i></p>
+      <p class="status-late"><strong>Late:</strong> <span id="late"></span> <i class="fas fa-times-circle"></i></p>
+      <p class="status-pending"><strong>Pending:</strong> <span id="pending"></span> <i class="fas fa-hourglass-half"></i></p>
+      <p><strong>Target %:</strong> <span id="targetPercent"></span>% <i class="fas fa-bullseye"></i></p>
+      <p><strong>Achieved %:</strong> <span id="achieved"></span>% <i class="fas fa-trophy"></i></p>
+      <p id="statusMessage" class="status-message"></p>
+    </div>
+
+    <h2 class="text-xl font-semibold mb-2">Your Tasks <i class="fas fa-clipboard-list fa-icon"></i></h2>
+    <div id="taskList" class="task-grid">
+      <!-- Task cards will be loaded here by JavaScript -->
+    </div>
+  </div>
+
+  <!-- Loader Overlay -->
+  <div id="loader-overlay" class="loader-overlay">
+      <div class="spinner"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Custom Modal for Alerts/Confirmations -->
+  <div id="custom-modal-overlay" class="custom-modal-overlay">
+      <div class="custom-modal-content">
+          <h3 id="modal-title"></h3>
+          <p id="modal-message"></p>
+          <div id="modal-buttons" class="custom-modal-buttons">
+              <!-- Buttons will be injected here by JS -->
+          </div>
+      </div>
+  </div>
+
+  <script src="js/performance.js"></script>
+  <script src="js/ui-helpers.js"></script> <!-- New helper script for UI elements -->
+</body>
+</html>

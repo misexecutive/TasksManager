@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Panel - Task Management</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="assets/css/styles.css" rel="stylesheet" />
+</head>
+<body class="p-6 font-sans" onload="initializeAdminPage()">
+  <div class="container">
+    <h1 class="text-2xl font-bold mb-4">Admin Portal - Welcome, <span id="userName"></span> <i class="fas fa-user-cog fa-icon"></i></h1>
+
+    <hr class="my-8">
+
+    <h1 class="text-2xl font-bold mb-4">Add Employee <i class="fas fa-user-plus fa-icon"></i></h1>
+    <form id="employeeForm" class="form-section">
+      <div class="form-group">
+        <label for="employeeName">Name</label>
+        <input type="text" name="name" id="employeeName" placeholder="Employee Name" required />
+      </div>
+      <div class="form-group">
+        <label for="employeeEmail">Email</label>
+        <input type="email" name="email" id="employeeEmail" placeholder="Employee Email" required />
+      </div>
+      <div class="form-group">
+        <label for="employeeDepartment">Department</label>
+        <input type="text" name="department" id="employeeDepartment" placeholder="Department" required />
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="fas fa-plus fa-icon"></i> Add Employee</button>
+    </form>
+
+    <h2 class="text-xl font-semibold mb-2">Employee List <i class="fas fa-users fa-icon"></i></h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Department</th>
+        </tr>
+      </thead>
+      <tbody id="employeeTableBody">
+        <!-- Filled by JS -->
+      </tbody>
+    </table>
+
+    <hr class="my-8">
+
+    <h1 class="text-2xl font-bold mb-4">Add Task <i class="fas fa-plus-square fa-icon"></i></h1>
+    <form id="taskForm" class="form-section">
+      <div class="form-group">
+        <label for="taskName">Task Name</label>
+        <input type="text" name="name" id="taskName" placeholder="Task Name" required />
+      </div>
+      <div class="form-group">
+        <label for="taskDescription">Task Description</label>
+        <input type="text" name="description" id="taskDescription" placeholder="Task Description" required />
+      </div>
+      <button type="submit" class="btn btn-success"><i class="fas fa-plus fa-icon"></i> Add Task</button>
+    </form>
+
+    <h2 class="text-xl font-semibold mb-2">Task List <i class="fas fa-tasks fa-icon"></i></h2>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Task ID</th>
+          <th>Name</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody id="taskTableBody">
+        <!-- Filled by JS -->
+      </tbody>
+    </table>
+
+    <hr class="my-8">
+
+    <h1 class="text-2xl font-bold mb-4">Assign Task <i class="fas fa-hand-holding-box fa-icon"></i></h1>
+    <form id="assignForm" class="form-section">
+      <div class="form-group">
+        <label for="taskDropdown">Select Task</label>
+        <select name="task" id="taskDropdown" required></select>
+      </div>
+      <div class="form-group">
+        <label for="employeeDropdown">Assign To (Employee)</label>
+        <select name="assignedTo" id="employeeDropdown" required></select>
+      </div>
+      <div class="form-group">
+        <label for="recurrence">Recurrence</label>
+        <select name="recurrence" id="recurrence" required>
+          <option value="Daily">Daily</option>
+          <option value="Weekly">Weekly</option>
+          <option value="Monthly">Monthly</option>
+          <option value="One Time">One Time</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <input type="date" name="startDate" id="startDate" required />
+      </div>
+      <button type="submit" class="btn btn-purple"><i class="fas fa-paper-plane fa-icon"></i> Assign Task</button>
+    </form>
+
+    <hr class="my-8">
+
+    <h1 class="text-2xl font-bold mb-4">Global Performance Stats <i class="fas fa-globe fa-icon"></i></h1>
+    <div id="globalStatsBox" class="summary-box">
+      <p><strong>Total Tasks (All Time):</strong> <span id="globalTotal"></span> <i class="fas fa-layer-group"></i></p>
+      <p class="status-on-time"><strong>On Time (All Time):</strong> <span id="globalOnTime"></span> <i class="fas fa-check-double"></i></p>
+      <p class="status-late"><strong>Late (All Time):</strong> <span id="globalLate"></span> <i class="fas fa-exclamation-triangle"></i></p>
+      <p class="status-pending"><strong>Pending (All Time):</strong> <span id="globalPending"></span> <i class="fas fa-clock"></i></p>
+    </div>
+
+    <h2 class="text-xl font-semibold mb-2">Filter Performance Statistics <i class="fas fa-filter fa-icon"></i></h2>
+    <div class="form-section">
+        <div class="form-group">
+            <label for="filterDepartment">Department</label>
+            <select id="filterDepartment">
+                <option value="">All Departments</option>
+                <!-- Departments will be populated by JS -->
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="filterLevel">Performance Level</label>
+            <select id="filterLevel">
+                <option value="">All Levels</option>
+                <option value="outstanding">Outstanding</option>
+                <option value="pass">Pass</option>
+                <option value="fail">Fail</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="filterFromDate">From Date</label>
+            <input type="date" id="filterFromDate">
+        </div>
+        <div class="form-group">
+            <label for="filterToDate">To Date</label>
+            <input type="date" id="filterToDate">
+        </div>
+        <button id="applyFilterBtn" class="btn btn-primary"><i class="fas fa-search fa-icon"></i> Apply Filters</button>
+        <button id="clearFilterBtn" class="btn btn-danger"><i class="fas fa-redo fa-icon"></i> Clear Filters</button>
+    </div>
+
+    <h2 class="text-xl font-semibold mb-2">Filtered Performance Data <i class="fas fa-table fa-icon"></i></h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Total Tasks</th>
+                <th>On Time</th>
+                <th>Late</th>
+                <th>Pending</th>
+                <th>Achieved %</th>
+                <th>Level</th>
+            </tr>
+        </thead>
+        <tbody id="filteredStatsTableBody">
+            <!-- Filtered data will be populated by JS -->
+        </tbody>
+    </table>
+
+  </div>
+
+  <!-- Loader Overlay -->
+  <div id="loader-overlay" class="loader-overlay">
+      <div class="spinner"></div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+
+  <!-- Custom Modal for Alerts/Confirmations -->
+  <div id="custom-modal-overlay" class="custom-modal-overlay">
+      <div class="custom-modal-content">
+          <h3 id="modal-title"></h3>
+          <p id="modal-message"></p>
+          <div id="modal-buttons" class="custom-modal-buttons">
+              <!-- Buttons will be injected here by JS -->
+          </div>
+      </div>
+  </div>
+
+  <!-- Link to admin.js -->
+  <script src="js/admin.js"></script>
+  <script src="js/ui-helpers.js"></script> <!-- New helper script for UI elements -->
+</body>
+</html>

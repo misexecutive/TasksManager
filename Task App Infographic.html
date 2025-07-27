@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infographic: The Anatomy of a Task Management App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* COLOR PALETTE: Elysian Tech (Adapted from Elysian Elegance) */
+        /* Primary Yellow: #f5e551 */
+        /* Accent Gold: #d4af35 */
+        /* Primary Text/BG: #000000 */
+        /* Light BG/Accent: #bfbfbf */
+        /* Card BG: #ffffff */
+        /* Categorical Blue: #007bff */
+        /* Categorical Green: #28a745 */
+        /* Categorical Purple: #6f42c1 */
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        .section-title {
+            color: #000000;
+            border-bottom: 3px solid #f5e551;
+            padding-bottom: 8px;
+            display: inline-block;
+        }
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.05), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .stat-card {
+            background: linear-gradient(135deg, #424242, #000000);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #f5e551;
+        }
+        .flowchart-box {
+            border: 2px solid #d4af35;
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .flowchart-arrow {
+            font-size: 2rem;
+            color: #d4af35;
+            margin: 0 0.5rem;
+            align-self: center;
+        }
+        .flowchart-arrow-down {
+            font-size: 2rem;
+            color: #d4af35;
+            margin: 0.5rem 0;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+
+    <header class="bg-black text-white p-6 text-center shadow-lg">
+        <h1 class="text-4xl font-bold text-f5e551">The Anatomy of a Modern Task Management App</h1>
+        <p class="text-lg mt-2 text-gray-300">A visual deep-dive into the architecture, data flow, and technology stack.</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <!-- Section 1: Key Metrics -->
+        <section id="metrics" class="mb-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="stat-card text-center">
+                    <p class="stat-number">5</p>
+                    <p class="text-xl font-semibold mt-2">Core Data Tables</p>
+                </div>
+                <div class="stat-card text-center">
+                    <p class="stat-number">10+</p>
+                    <p class="text-xl font-semibold mt-2">API Endpoints</p>
+                </div>
+                <div class="stat-card text-center">
+                    <p class="stat-number">3</p>
+                    <p class="text-xl font-semibold mt-2">User Interfaces</p>
+                </div>
+                <div class="stat-card text-center">
+                    <p class="stat-number">1</p>
+                    <p class="text-xl font-semibold mt-2">Secure Auth Flow</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: High-Level Architecture -->
+        <section id="architecture" class="mb-16">
+            <h2 class="section-title text-3xl font-bold mb-8">High-Level Architecture</h2>
+            <div class="card p-8">
+                 <p class="text-lg text-center mb-8 max-w-3xl mx-auto">The application is built on a robust, serverless architecture that leverages the Google Workspace ecosystem. The frontend, built with standard web technologies, communicates with a Google Apps Script backend, which acts as a secure API layer to a Google Sheet database.</p>
+                <div class="flex flex-col md:flex-row justify-around items-center space-y-4 md:space-y-0 md:space-x-4">
+                    <div class="flowchart-box w-48"><strong>👤 User</strong><br/>(Admin/Employee)</div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-box w-48"><strong>💻 Frontend</strong><br/>(HTML, CSS, JS)</div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-box w-48 bg-yellow-100"><strong>☁️ Apps Script API</strong><br/>(Backend Logic)</div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-box w-48 bg-green-100"><strong>📊 Google Sheets</strong><br/>(Database)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Data Foundation -->
+        <section id="data" class="mb-16">
+            <h2 class="section-title text-3xl font-bold mb-8">The Data Foundation: Google Sheets</h2>
+             <p class="text-lg text-center mb-8 max-w-3xl mx-auto">The entire application runs on a single Google Sheet (`TPMS_MASTER`) acting as a lightweight, no-cost database. Data is organized across five specialized sheets, ensuring clear separation of concerns.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-2 text-center text-purple-600">Employees</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Full Name</li>
+                        <li>Email (Primary Key)</li>
+                        <li>Department</li>
+                        <li>Role (Admin/User)</li>
+                    </ul>
+                </div>
+                <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-2 text-center text-blue-600">Tasks</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Task ID (Primary Key)</li>
+                        <li>Task Name</li>
+                        <li>Description</li>
+                    </ul>
+                </div>
+                 <div class="card p-6">
+                    <h3 class="font-bold text-xl mb-2 text-center text-green-600">Targets</h3>
+                    <ul class="list-disc list-inside space-y-1">
+                        <li>Email</li>
+                        <li>Target %</li>
+                    </ul>
+                </div>
+                <div class="card p-6 lg:col-span-3">
+                     <h3 class="font-bold text-xl mb-4 text-center text-d4af35">Transactional Data</h3>
+                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-semibold text-lg mb-2">TaskAssignments</h4>
+                            <p class="text-sm mb-2">Connects Tasks to Employees, defining who does what, and how often.</p>
+                            <ul class="list-disc list-inside space-y-1">
+                                <li>Task ID</li>
+                                <li>Assigned To (Email)</li>
+                                <li>Recurrence</li>
+                                <li>Start Date</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-lg mb-2">GeneratedTasks</h4>
+                            <p class="text-sm mb-2">The live record of individual tasks to be completed, with their status.</p>
+                             <ul class="list-disc list-inside space-y-1">
+                                <li>Task ID & Name</li>
+                                <li>Assigned To (Email)</li>
+                                <li>Planned Date</li>
+                                <li>Status (On Time, Late, Pending)</li>
+                                <li>Marked Date</li>
+                            </ul>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 4: API & Logic -->
+        <section id="api" class="mb-16">
+            <h2 class="section-title text-3xl font-bold mb-8">The Brains: Google Apps Script API</h2>
+            <p class="text-lg text-center mb-8 max-w-3xl mx-auto">`Code.gs` is the powerful backend, exposing functions as a web API. It handles all business logic, data manipulation, and security checks before interacting with the Google Sheet.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="card p-6">
+                    <h3 class="font-bold text-2xl mb-4 text-center text-green-600">📥 Data Retrieval (GET)</h3>
+                    <ul class="space-y-3">
+                        <li><strong>getUserRole:</strong> Verifies if a user is an 'Admin' or 'User'.</li>
+                        <li><strong>getAllEmployees:</strong> Fetches the complete employee list.</li>
+                        <li><strong>getAllTasks:</strong> Retrieves all master tasks.</li>
+                        <li><strong>getUserTasks:</strong> Gets all tasks for a specific user.</li>
+                        <li><strong>getMyPerformance:</strong> Calculates personal weekly performance stats.</li>
+                        <li><strong>getFilteredStats:</strong> Provides advanced, filterable performance data for admins.</li>
+                    </ul>
+                </div>
+                <div class="card p-6">
+                    <h3 class="font-bold text-2xl mb-4 text-center text-blue-600">📤 Data Modification (POST)</h3>
+                     <ul class="space-y-3">
+                        <li><strong>addEmployee:</strong> Creates a new user in the system.</li>
+                        <li><strong>addTask:</strong> Defines a new master task.</li>
+                        <li><strong>assignTask:</strong> Links a task to an employee with a schedule.</li>
+                        <li><strong>markTaskDone:</strong> Updates a task's status to complete, calculating if it was on-time or late.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+         <!-- Section 5: Task Status Breakdown -->
+        <section id="chart-section" class="mb-16">
+             <h2 class="section-title text-3xl font-bold mb-8">Visualizing Performance</h2>
+            <div class="card p-8 flex flex-col lg:flex-row items-center gap-8">
+                <div class="flex-1">
+                     <h3 class="font-bold text-2xl mb-4 text-gray-800">Task Status Breakdown</h3>
+                     <p class="text-base mb-4">The system provides instant visual feedback on performance. A key metric is the ratio of completed tasks. The 'On Time' percentage is a critical KPI for both employees and managers, directly compared against set targets to measure efficiency.</p>
+                     <p class="text-base">This donut chart represents a typical snapshot of all assigned tasks across the organization, helping to identify potential bottlenecks or celebrate achievements at a glance.</p>
+                </div>
+                <div class="flex-1 w-full">
+                    <div class="chart-container">
+                        <canvas id="taskStatusChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 6: User Authentication Flow -->
+        <section id="auth" class="mb-16">
+            <h2 class="section-title text-3xl font-bold mb-8">Secure Sign-In: OAuth Workflow</h2>
+            <div class="card p-8">
+                 <p class="text-lg text-center mb-8 max-w-3xl mx-auto">Authentication is handled securely via Google's own Identity Services. This flow ensures that only authorized users from the `Employees` sheet can access the application, while also providing a seamless single sign-on (SSO) experience.</p>
+                <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 text-center">
+                    <div class="flowchart-box">1. User visits<br/><strong>portal.html</strong></div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-box">2. Clicks<br/><strong>"Sign in with Google"</strong></div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-box">3. Google provides<br/><strong>JWT Credential</strong></div>
+                    <div class="flowchart-arrow-down md:flowchart-arrow-down-none md:flowchart-arrow">↓</div>
+                    <div class="flowchart-box bg-yellow-100">4. JS sends Email to API<br/><strong>(getUserRole)</strong></div>
+                    <div class="flowchart-arrow">→</div>
+                    <div class="flowchart-box">5. Redirected to<br/><strong>Admin or User Page</strong></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer class="bg-black text-white p-4 text-center mt-8">
+        <p>This infographic was generated to visualize the Task Management App architecture. No SVG or Mermaid JS was used in this output.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            function wrapText(str) {
+                const words = str.split(' ');
+                const lines = [];
+                let currentLine = words[0];
+                const maxLength = 16;
+
+                for (let i = 1; i < words.length; i++) {
+                    if (currentLine.length + words[i].length + 1 < maxLength) {
+                        currentLine += ' ' + words[i];
+                    } else {
+                        lines.push(currentLine);
+                        currentLine = words[i];
+                    }
+                }
+                lines.push(currentLine);
+                return lines;
+            }
+
+            const ctx = document.getElementById('taskStatusChart');
+            if (ctx) {
+                new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['On Time', 'Late', 'Pending'],
+                        datasets: [{
+                            label: 'Task Status',
+                            data: [150, 25, 45],
+                            backgroundColor: [
+                                '#28a745', // Green
+                                '#dc3545', // Red
+                                '#ffc107'  // Yellow
+                            ],
+                            borderColor: [
+                                '#ffffff',
+                                '#ffffff',
+                                '#ffffff'
+                            ],
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'top',
+                                labels: {
+                                    font: {
+                                        size: 14,
+                                        family: 'Poppins'
+                                    }
+                                }
+                            },
+                            tooltip: {
+                                callbacks: {
+                                    title: function(tooltipItems) {
+                                        const item = tooltipItems[0];
+                                        let label = item.chart.data.labels[item.dataIndex];
+                                        if (Array.isArray(label)) {
+                                          return label.join(' ');
+                                        } else {
+                                          return label;
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
