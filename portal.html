@@ -4,23 +4,47 @@
   <meta charset="UTF-8">
   <title>User Task Portal</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Sign-In client library -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
-    // jwt_decode function is kept as it's essential for decoding the Google credential
+    /**
+     * Decodes a JWT token to extract its payload.
+     * This function is essential for processing the Google credential response.
+     * @param {string} token - The JWT token string.
+     * @returns {Object} The decoded payload as a JavaScript object.
+     * @throws {Error} If the JWT format is invalid.
+     */
     function jwt_decode(token) {
       var parts = token.split('.');
       if (parts.length !== 3) throw new Error('JWT must have 3 parts');
       const payload = parts[1];
+      // Decode base64url to base64, then base64 to string, then parse JSON
       return JSON.parse(decodeURIComponent(atob(payload.replace(/-/g, '+').replace(/_/g, '/')).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join('')));
     }
   </script>
 
+  <!-- Link to custom styles -->
   <link href="assets/css/styles.css" rel="stylesheet">
 </head>
 <body class="flex-center">
+  <!-- Header Section (minimal for portal) -->
+  <header>
+    <!-- Application Logo -->
+    <img id="appLogo" src="assets/image/logo.png" alt="Company Logo" class="logo">
+    <!-- Organization Information -->
+    <div id="orgInfo" class="org-info">
+      <!-- Org Name and Tagline will be populated by JS -->
+    </div>
+    <!-- Theme Toggle Button -->
+    <button id="themeToggleBtn" class="theme-toggle-btn">
+      <i class="fas fa-adjust"></i> Toggle Theme
+    </button>
+  </header>
+
   <div class="auth-card">
     <h1 class="text-3xl font-bold mb-6 text-gray-800">Welcome to Task Manager</h1>
     <p class="mb-6 text-gray-600">Please sign in to continue.</p>
@@ -41,9 +65,12 @@
     </div>
   </div>
 
-  <!-- Loader Overlay -->
+  <!-- Loader Overlay (Progress Bar) -->
   <div id="loader-overlay" class="loader-overlay">
-      <div class="spinner"></div>
+      <div class="loader-bar-container">
+          <div id="loaderProgressBar" class="loader-progress-bar"></div>
+      </div>
+      <div id="loaderProgressText" class="loader-text">Loading...</div>
   </div>
 
   <!-- Toast Container -->
@@ -60,8 +87,27 @@
       </div>
   </div>
 
-  <!-- Link to portal.js -->
-  <script src="js/portal.js"></script>
-  <script src="js/ui-helpers.js"></script> <!-- New helper script for UI elements -->
+  <!-- Footer Section -->
+  <footer>
+    <div id="contactInfo">
+      <!-- Mobile and Address will be populated by JS -->
+    </div>
+  </footer>
+
+  <!-- Link to helper scripts and portal-specific script -->
+  <script src="js/ui-helpers.js"></script> <!-- Helper script for UI elements, themes, and customization -->
+  <script src="js/portal.js"></script> <!-- Portal-specific logic -->
+  <script>
+    // Global initialization function for all pages
+    async function initializePage() {
+      await fetchCustomizationData(); // Load customization data
+      applyCustomizationData(); // Apply customization data to the DOM
+      loadThemePreference(); // Load and apply theme preference
+      // Initialize theme toggle button
+      document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+      // No specific portal initialization function needed as handleCredentialResponse is global
+    }
+    window.onload = initializePage; // Call the global initializer on page load
+  </script>
 </body>
 </html>
