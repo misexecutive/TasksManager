@@ -1,67 +1,220 @@
 /* Import Poppins Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* Base Styles */
+/* --- Theme Variables --- */
+/* Default Theme (White & Shades of Blue) */
 :root {
-    --color-white: #ffffff;
-    --color-energy-yellow: #f5e551;
-    --color-old-gold: #d4af35;
-    --color-black: #000000;
-    --color-silver: #bfbfbf;
-    --color-dark-gray: #333333;
-    --color-light-gray: #f8f8f8;
-    --color-green-success: #28a745;
-    --color-red-danger: #dc3545;
-    --color-yellow-pending: #ffc107;
-    --color-purple-accent: #6f42c1; /* For assign button */
-    --color-blue-primary: #007bff; /* For add employee */
-    --color-green-secondary: #28a745; /* For add task */
+    --bg-color: #f8f8f8; /* Light gray background */
+    --text-color: #333333; /* Dark gray text */
+    --heading-color: #000000; /* Black headings */
+    --card-bg: #ffffff; /* White card background */
+    --border-color: #bfbfbf; /* Silver border */
+    --primary-color: #007bff; /* Blue primary for buttons/accents */
+    --primary-light: #0091ff; /* Lighter primary for gradients */
+    --secondary-color: #28a745; /* Green secondary */
+    --secondary-light: #32cd32; /* Lighter secondary for gradients */
+    --accent-color: #6f42c1; /* Purple accent */
+    --accent-light: #8a2be2; /* Lighter purple for gradients */
+    --danger-color: #dc3545; /* Red danger */
+    --danger-light: #ff6347; /* Lighter red for gradients */
+    --warning-color: #f5e551; /* Energy yellow for warnings/tables */
+    --warning-light: #d4af35; /* Old gold for warnings/tables */
+    --info-color: #17a2b8; /* Info blue */
+    --success-color: #28a745; /* Success green */
+    --pending-color: #ffc107; /* Pending yellow */
+    --table-header-bg: var(--warning-color); /* Table header background */
+    --table-header-text: var(--heading-color); /* Table header text color */
+    --table-row-even-bg: var(--bg-color); /* Even row background */
+    --table-row-hover-bg: #e6e6e6; /* Row hover background */
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-medium: rgba(0, 0, 0, 0.1);
+    --shadow-strong: rgba(0, 0, 0, 0.15);
 }
 
+/* Dark Theme */
+body.theme-dark {
+    --bg-color: #1a1a2e; /* Dark blue background */
+    --text-color: #e0e0e0; /* Light gray text */
+    --heading-color: #ffffff; /* White headings */
+    --card-bg: #2a2a4a; /* Darker blue card background */
+    --border-color: #4a4a6a; /* Darker border */
+    --primary-color: #6a0572; /* Dark purple primary */
+    --primary-light: #8e2de2; /* Lighter dark purple */
+    --secondary-color: #007bff; /* Blue secondary */
+    --secondary-light: #00bfff; /* Lighter blue */
+    --accent-color: #ff6b6b; /* Red accent */
+    --accent-light: #ff8c8c; /* Lighter red */
+    --danger-color: #e74c3c; /* Darker red danger */
+    --danger-light: #ff7043; /* Lighter danger */
+    --warning-color: #f39c12; /* Orange warning */
+    --warning-light: #f7dc6f; /* Lighter orange */
+    --info-color: #3498db; /* Info blue */
+    --success-color: #2ecc71; /* Success green */
+    --pending-color: #f1c40f; /* Pending yellow */
+    --table-header-bg: var(--primary-color); /* Table header background */
+    --table-header-text: var(--heading-color); /* Table header text color */
+    --table-row-even-bg: #22223a; /* Even row background */
+    --table-row-hover-bg: #333355; /* Row hover background */
+    --shadow-light: rgba(0, 0, 0, 0.2);
+    --shadow-medium: rgba(0, 0, 0, 0.3);
+    --shadow-strong: rgba(0, 0, 0, 0.4);
+}
+
+/* Light Theme */
+body.theme-light {
+    --bg-color: #f0f4f8; /* Very light blue background */
+    --text-color: #4a4a4a; /* Slightly darker gray text */
+    --heading-color: #2c3e50; /* Dark blue-gray headings */
+    --card-bg: #ffffff; /* White card background */
+    --border-color: #dbe2ed; /* Light blue-gray border */
+    --primary-color: #3498db; /* Sky blue primary */
+    --primary-light: #5dade2; /* Lighter sky blue */
+    --secondary-color: #27ae60; /* Emerald green secondary */
+    --secondary-light: #58d68d; /* Lighter emerald green */
+    --accent-color: #9b59b6; /* Amethyst purple accent */
+    --accent-light: #af7ac5; /* Lighter amethyst */
+    --danger-color: #e74c3c; /* Alizarin red danger */
+    --danger-light: #ec7063; /* Lighter alizarin */
+    --warning-color: #f1c40f; /* Sunflower yellow warning */
+    --warning-light: #f4d03f; /* Lighter sunflower */
+    --info-color: #3498db; /* Info blue */
+    --success-color: #2ecc71; /* Success green */
+    --pending-color: #f1c40f; /* Pending yellow */
+    --table-header-bg: var(--primary-color); /* Table header background */
+    --table-header-text: var(--heading-color); /* Table header text color */
+    --table-row-even-bg: #e9f0f6; /* Even row background */
+    --table-row-hover-bg: #d4e0eb; /* Row hover background */
+    --shadow-light: rgba(44, 62, 80, 0.05);
+    --shadow-medium: rgba(44, 62, 80, 0.1);
+    --shadow-strong: rgba(44, 62, 80, 0.15);
+}
+
+
+/* --- Base Styles --- */
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: var(--color-light-gray);
-    color: var(--color-dark-gray);
+    background-color: var(--bg-color);
+    color: var(--text-color);
     line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease; /* Smooth theme transition */
+    min-height: 100vh; /* Ensure body takes full viewport height */
+    display: flex;
+    flex-direction: column; /* For footer to stick to bottom */
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-weight: 600;
-    color: var(--color-black);
+    color: var(--heading-color);
     margin-bottom: 0.5em;
+    transition: color 0.3s ease; /* Smooth theme transition */
 }
 
-/* Container & Layouts */
+/* --- Header & Footer --- */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 5px var(--shadow-light);
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 10px; /* Space between items */
+}
+
+header .logo {
+    height: 40px; /* Adjust logo size */
+    width: auto;
+}
+
+header .org-info {
+    text-align: right;
+    flex-grow: 1; /* Allows it to take available space */
+}
+
+header .org-info h2 {
+    margin: 0;
+    font-size: 1.2em;
+    color: var(--heading-color);
+}
+
+header .org-info p {
+    margin: 0;
+    font-size: 0.85em;
+    color: var(--text-color);
+}
+
+footer {
+    padding: 15px 20px;
+    background-color: var(--card-bg);
+    border-top: 1px solid var(--border-color);
+    box-shadow: 0 -2px 5px var(--shadow-light);
+    text-align: center;
+    margin-top: auto; /* Pushes footer to the bottom */
+    color: var(--text-color);
+    font-size: 0.9em;
+}
+
+footer p {
+    margin: 5px 0;
+}
+
+/* --- Container & Layouts --- */
 .container {
     max-width: 1200px;
     margin: 20px auto;
     padding: 20px;
-    background-color: var(--color-white);
+    background-color: var(--card-bg);
     border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 16px var(--shadow-medium);
+    flex-grow: 1; /* Allows container to expand and push footer down */
 }
 
 .flex-center {
     display: flex;
+    flex-direction: column; /* Stack vertically for auth card */
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: var(--color-light-gray);
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease;
+    padding: 20px; /* Add padding for small screens */
+    box-sizing: border-box; /* Include padding in width/height */
 }
 
 .auth-card {
-    background-color: var(--color-white);
+    background-color: var(--card-bg);
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 16px var(--shadow-strong);
     text-align: center;
     max-width: 450px;
-    width: 90%;
+    width: 100%; /* Make it fluid */
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Buttons */
+/* --- Theme Toggle Button --- */
+.theme-toggle-btn {
+    background-color: var(--primary-color);
+    color: var(--text-color); /* Text color adapts to theme */
+    border: none;
+    padding: 8px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 5px var(--shadow-light);
+}
+
+.theme-toggle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--shadow-medium);
+}
+
+/* --- Buttons --- */
 .btn {
     display: inline-flex;
     align-items: center;
@@ -74,8 +227,8 @@ h1, h2, h3, h4, h5, h6 {
     cursor: pointer;
     transition: all 0.3s ease;
     text-decoration: none;
-    color: var(--color-white);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    color: var(--heading-color); /* Button text color adapts */
+    box-shadow: 0 4px 8px var(--shadow-light);
     position: relative;
     overflow: hidden;
     background-size: 200% auto;
@@ -83,29 +236,33 @@ h1, h2, h3, h4, h5, h6 {
 
 .btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 6px 12px var(--shadow-medium);
     background-position: right center;
 }
 
 .btn-primary {
-    background-image: linear-gradient(to right, var(--color-blue-primary) 0%, #0056b3 50%, var(--color-blue-primary) 100%);
+    background-image: linear-gradient(to right, var(--primary-color) 0%, var(--primary-light) 50%, var(--primary-color) 100%);
+    color: var(--card-bg); /* White text for primary buttons */
 }
 
 .btn-success {
-    background-image: linear-gradient(to right, var(--color-green-secondary) 0%, #218838 50%, var(--color-green-secondary) 100%);
+    background-image: linear-gradient(to right, var(--secondary-color) 0%, var(--secondary-light) 50%, var(--secondary-color) 100%);
+    color: var(--card-bg); /* White text for success buttons */
 }
 
 .btn-purple {
-    background-image: linear-gradient(to right, var(--color-purple-accent) 0%, #5a2e9b 50%, var(--color-purple-accent) 100%);
+    background-image: linear-gradient(to right, var(--accent-color) 0%, var(--accent-light) 50%, var(--accent-color) 100%);
+    color: var(--card-bg); /* White text for purple buttons */
 }
 
 .btn-danger {
-    background-image: linear-gradient(to right, var(--color-red-danger) 0%, #bd2130 50%, var(--color-red-danger) 100%);
+    background-image: linear-gradient(to right, var(--danger-color) 0%, var(--danger-light) 50%, var(--danger-color) 100%);
+    color: var(--card-bg); /* White text for danger buttons */
 }
 
 .btn-mark-done {
-    background-image: linear-gradient(to right, var(--color-energy-yellow) 0%, var(--color-old-gold) 50%, var(--color-energy-yellow) 100%);
-    color: var(--color-black);
+    background-image: linear-gradient(to right, var(--warning-color) 0%, var(--warning-light) 50%, var(--warning-color) 100%);
+    color: var(--heading-color); /* Dark text for warning buttons */
     font-weight: 600;
 }
 
@@ -114,15 +271,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-/* Forms & Inputs */
+/* --- Forms & Inputs --- */
 .form-section {
-    background-color: var(--color-white);
+    background-color: var(--card-bg);
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 8px var(--shadow-light);
     margin-bottom: 30px;
     width: 100%;
     max-width: 600px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .form-group {
@@ -133,63 +292,71 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
     margin-bottom: 8px;
     font-weight: 500;
-    color: var(--color-dark-gray);
+    color: var(--text-color);
+    transition: color 0.3s ease;
 }
 
 .form-group input[type="text"],
 .form-group input[type="email"],
 .form-group input[type="date"],
 .form-group select {
-    width: calc(100% - 20px);
+    width: calc(100% - 20px); /* Account for padding */
     padding: 12px 10px;
-    border: 1px solid var(--color-silver);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     font-size: 1rem;
-    color: var(--color-dark-gray);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    color: var(--text-color);
+    background-color: var(--card-bg);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 }
 
 .form-group input:focus,
 .form-group select:focus {
-    border-color: var(--color-old-gold);
-    box-shadow: 0 0 0 3px rgba(212, 175, 53, 0.2);
+    border-color: var(--warning-light);
+    box-shadow: 0 0 0 3px rgba(212, 175, 53, 0.2); /* Use a consistent focus shadow */
     outline: none;
 }
 
-/* Tables */
+/* --- Tables --- */
 .data-table {
     width: 100%;
-    border-collapse: separate; /* Use separate to apply border-radius to cells */
+    border-collapse: separate;
     border-spacing: 0;
     margin-bottom: 30px;
-    background-color: var(--color-white);
+    background-color: var(--card-bg);
     border-radius: 12px;
-    overflow: hidden; /* Ensures rounded corners are applied */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    box-shadow: 0 4px 8px var(--shadow-light);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .data-table th,
 .data-table td {
     padding: 15px;
     text-align: left;
-    border-bottom: 1px solid var(--color-silver);
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-color);
+    transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .data-table thead th {
-    background-color: var(--color-energy-yellow);
-    color: var(--color-black);
+    background-color: var(--table-header-bg);
+    color: var(--table-header-text);
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.9em;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .data-table tbody tr:nth-child(even) {
-    background-color: var(--color-light-gray);
+    background-color: var(--table-row-even-bg);
+    transition: background-color 0.3s ease;
 }
 
 .data-table tbody tr:hover {
-    background-color: #e6e6e6;
+    background-color: var(--table-row-hover-bg);
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .data-table th:first-child {
@@ -200,43 +367,51 @@ h1, h2, h3, h4, h5, h6 {
     border-top-right-radius: 12px;
 }
 
-/* Cards / Summary Boxes */
+/* --- Cards / Summary Boxes --- */
 .summary-box, .card {
-    background-color: var(--color-white);
+    background-color: var(--card-bg);
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 8px var(--shadow-light);
     margin-bottom: 25px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .summary-box p {
     margin-bottom: 10px;
     font-size: 1.1em;
+    color: var(--text-color);
+    transition: color 0.3s ease;
 }
 
 .summary-box p strong {
-    color: var(--color-black);
+    color: var(--heading-color);
+    transition: color 0.3s ease;
 }
 
 .status-on-time {
-    color: var(--color-green-success);
+    color: var(--success-color);
     font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 .status-late {
-    color: var(--color-red-danger);
+    color: var(--danger-color);
     font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 .status-pending {
-    color: var(--color-yellow-pending);
+    color: var(--pending-color);
     font-weight: 600;
+    transition: color 0.3s ease;
 }
 
 .status-message {
     margin-top: 15px;
     font-size: 1.2em;
     font-weight: 700;
+    transition: color 0.3s ease;
 }
 
 .task-grid {
@@ -246,28 +421,31 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .task-card {
-    background-color: var(--color-white);
+    background-color: var(--card-bg);
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-    border: 1px solid var(--color-silver);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 8px var(--shadow-light);
+    border: 1px solid var(--border-color);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .task-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 6px 12px var(--shadow-medium);
 }
 
 .task-card h3 {
-    color: var(--color-old-gold);
+    color: var(--warning-light); /* Using warning-light for task card headings */
     margin-bottom: 10px;
     font-size: 1.2em;
+    transition: color 0.3s ease;
 }
 
 .task-card p {
     font-size: 0.95em;
     margin-bottom: 5px;
+    color: var(--text-color);
+    transition: color 0.3s ease;
 }
 
 /* Icons (Font Awesome) */
@@ -275,21 +453,22 @@ h1, h2, h3, h4, h5, h6 {
     margin-right: 8px;
 }
 
-/* Loaders and Spinners */
+/* --- Loaders (Progress Bar) --- */
 .loader-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7); /* Darker overlay for visibility */
     display: flex;
+    flex-direction: column; /* Stack progress bar and text */
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    transition: opacity 0.3s ease;
     opacity: 0;
     visibility: hidden;
+    transition: opacity 0.3s ease;
 }
 
 .loader-overlay.show {
@@ -297,21 +476,31 @@ h1, h2, h3, h4, h5, h6 {
     visibility: visible;
 }
 
-.spinner {
-    border: 8px solid var(--color-silver);
-    border-top: 8px solid var(--color-energy-yellow);
-    border-radius: 50%;
-    width: 60px;
-    height: 60px;
-    animation: spin 1s linear infinite;
+.loader-bar-container {
+    width: 80%;
+    max-width: 400px;
+    background-color: var(--border-color);
+    border-radius: 5px;
+    height: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
 }
 
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+.loader-progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: var(--primary-light);
+    border-radius: 5px;
+    transition: width 0.3s ease-out; /* Smooth progress animation */
 }
 
-/* Toast Messages */
+.loader-text {
+    color: var(--card-bg); /* White text on dark overlay */
+    font-size: 1em;
+    font-weight: 500;
+}
+
+/* --- Toast Messages --- */
 #toast-container {
     position: fixed;
     bottom: 20px;
@@ -320,22 +509,27 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    /* Ensure toasts stack correctly on small screens */
+    left: 20px;
+    right: 20px;
+    align-items: flex-end; /* Align to right on larger screens */
 }
 
 .toast {
-    background-color: var(--color-black);
-    color: var(--color-white);
+    background-color: var(--card-bg); /* Toast background adapts */
+    color: var(--text-color); /* Toast text adapts */
     padding: 15px 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px var(--shadow-medium);
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
     min-width: 250px;
     max-width: 350px;
     display: flex;
     align-items: center;
     gap: 10px;
+    border: 1px solid var(--border-color); /* Add border for definition */
 }
 
 .toast.show {
@@ -348,11 +542,13 @@ h1, h2, h3, h4, h5, h6 {
     transform: translateY(20px);
 }
 
-.toast.success { background-color: var(--color-green-success); }
-.toast.error { background-color: var(--color-red-danger); }
-.toast.info { background-color: var(--color-blue-primary); }
+.toast.success { background-color: var(--success-color); color: var(--card-bg); }
+.toast.error { background-color: var(--danger-color); color: var(--card-bg); }
+.toast.info { background-color: var(--info-color); color: var(--card-bg); }
+.toast.success .fa-icon, .toast.error .fa-icon, .toast.info .fa-icon { color: var(--card-bg); }
 
-/* Custom Modal for Alerts/Confirmations */
+
+/* --- Custom Modal for Alerts/Confirmations --- */
 .custom-modal-overlay {
     position: fixed;
     top: 0;
@@ -375,15 +571,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .custom-modal-content {
-    background-color: var(--color-white);
+    background-color: var(--card-bg);
     padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 20px var(--shadow-strong);
     text-align: center;
     max-width: 400px;
     width: 90%;
     transform: translateY(-20px);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .custom-modal-overlay.show .custom-modal-content {
@@ -392,50 +588,131 @@ h1, h2, h3, h4, h5, h6 {
 
 .custom-modal-content h3 {
     margin-top: 0;
-    color: var(--color-black);
+    color: var(--heading-color);
     font-size: 1.4em;
     margin-bottom: 15px;
+    transition: color 0.3s ease;
 }
 
 .custom-modal-content p {
     margin-bottom: 25px;
-    color: var(--color-dark-gray);
+    color: var(--text-color);
+    transition: color 0.3s ease;
 }
 
 .custom-modal-buttons {
     display: flex;
     justify-content: center;
     gap: 15px;
+    flex-wrap: wrap; /* Allow buttons to wrap */
 }
 
-/* Responsive adjustments */
+/* --- Responsive adjustments --- */
 @media (max-width: 768px) {
     body {
-        padding: 15px;
+        padding: 10px; /* Reduce overall padding */
+    }
+
+    header {
+        flex-direction: column; /* Stack header items */
+        text-align: center;
+        padding: 10px;
+    }
+
+    header .org-info {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .theme-toggle-btn {
+        margin-top: 10px; /* Space out the toggle button */
     }
 
     .container {
         padding: 15px;
+        margin: 10px auto; /* Adjust margin for smaller screens */
     }
 
     .form-section {
         padding: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="date"],
+    .form-group select {
+        width: calc(100% - 20px); /* Ensure full width */
     }
 
     .data-table {
-        font-size: 0.9em;
+        font-size: 0.85em; /* Smaller font for tables */
+        display: block; /* Make table scrollable */
+        overflow-x: auto; /* Enable horizontal scrolling for tables */
+        white-space: nowrap; /* Prevent text wrapping inside cells */
     }
 
     .data-table th,
     .data-table td {
-        padding: 10px;
+        padding: 8px;
     }
 
     .task-grid {
         grid-template-columns: 1fr; /* Stack cards on small screens */
+        gap: 15px;
     }
 
     .auth-card {
-        padding: 30px;
+        padding: 25px;
+    }
+
+    .btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+
+    .summary-box p {
+        font-size: 1em;
+    }
+
+    #toast-container {
+        bottom: 10px;
+        right: 10px;
+        left: 10px; /* Occupy full width on small screens */
+        align-items: center; /* Center toasts on small screens */
+    }
+
+    .toast {
+        min-width: unset; /* Remove min-width on small screens */
+        max-width: 90%; /* Max width for toast */
+        width: auto; /* Auto width */
+        text-align: center;
+        justify-content: center;
+        padding: 12px 15px;
+    }
+
+    .custom-modal-content {
+        padding: 20px;
+        width: 95%;
+    }
+
+    .custom-modal-buttons {
+        flex-direction: column; /* Stack buttons vertically */
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 5px auto;
+        padding: 10px;
+    }
+
+    .form-section {
+        padding: 15px;
+    }
+
+    .auth-card {
+        padding: 20px;
     }
 }
