@@ -4,26 +4,52 @@
   <meta charset="UTF-8">
   <title>Weekly Performance</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Sign-In client library -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
   <script>
+    /**
+     * Decodes a JWT token to extract its payload.
+     * This function is essential for processing the Google credential response.
+     * @param {string} token - The JWT token string.
+     * @returns {Object} The decoded payload as a JavaScript object.
+     * @throws {Error} If the JWT format is invalid.
+     */
     function jwt_decode(token) {
       var parts = token.split('.');
       if (parts.length !== 3) throw new Error('JWT must have 3 parts');
       const payload = parts[1];
+      // Decode base64url to base64, then base64 to string, then parse JSON
       return JSON.parse(decodeURIComponent(atob(payload.replace(/-/g, '+').replace(/_/g, '/')).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
       }).join('')));
     }
   </script>
 
+  <!-- Link to custom styles -->
   <link href="assets/css/styles.css" rel="stylesheet">
 </head>
-<body class="p-6 font-sans" onload="initializePerformancePage()">
+<body class="p-6 font-sans">
+  <!-- Header Section -->
+  <header>
+    <!-- Application Logo -->
+    <img id="appLogo" src="assets/image/logo.png" alt="Company Logo" class="logo">
+    <!-- Organization Information -->
+    <div id="orgInfo" class="org-info">
+      <!-- Org Name and Tagline will be populated by JS -->
+    </div>
+    <!-- Theme Toggle Button -->
+    <button id="themeToggleBtn" class="theme-toggle-btn">
+      <i class="fas fa-adjust"></i> Toggle Theme
+    </button>
+  </header>
+
   <div class="container">
     <h1 class="text-2xl font-bold mb-4">Hello, <span id="userName"></span> <i class="fas fa-user-circle fa-icon"></i></h1>
     <h2 class="text-xl font-semibold mb-2">This Week's Performance <i class="fas fa-chart-line fa-icon"></i></h2>
 
+    <!-- Performance Summary Box -->
     <div id="summaryBox" class="summary-box">
       <p><strong>Total Tasks:</strong> <span id="total"></span> <i class="fas fa-tasks"></i></p>
       <p class="status-on-time"><strong>On Time:</strong> <span id="onTime"></span> <i class="fas fa-check-circle"></i></p>
@@ -40,9 +66,12 @@
     </div>
   </div>
 
-  <!-- Loader Overlay -->
+  <!-- Loader Overlay (Progress Bar) -->
   <div id="loader-overlay" class="loader-overlay">
-      <div class="spinner"></div>
+      <div class="loader-bar-container">
+          <div id="loaderProgressBar" class="loader-progress-bar"></div>
+      </div>
+      <div id="loaderProgressText" class="loader-text">Loading...</div>
   </div>
 
   <!-- Toast Container -->
@@ -59,7 +88,27 @@
       </div>
   </div>
 
-  <script src="js/performance.js"></script>
-  <script src="js/ui-helpers.js"></script> <!-- New helper script for UI elements -->
+  <!-- Footer Section -->
+  <footer>
+    <div id="contactInfo">
+      <!-- Mobile and Address will be populated by JS -->
+    </div>
+  </footer>
+
+  <!-- Link to helper scripts and performance-specific script -->
+  <script src="js/ui-helpers.js"></script> <!-- Helper script for UI elements, themes, and customization -->
+  <script src="js/performance.js"></script> <!-- Performance-specific logic -->
+  <script>
+    // Global initialization function for all pages
+    async function initializePage() {
+      await fetchCustomizationData(); // Load customization data
+      applyCustomizationData(); // Apply customization data to the DOM
+      loadThemePreference(); // Load and apply theme preference
+      // Initialize theme toggle button
+      document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+      initializePerformancePage(); // Call the page-specific initialization
+    }
+    window.onload = initializePage; // Call the global initializer on page load
+  </script>
 </body>
 </html>
