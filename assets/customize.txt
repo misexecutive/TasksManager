@@ -1,4 +1,4 @@
-Org: "LIC"
-Tagline: "Zindagi ke sath bhi, zindagi ke baad bhi"
+Org: "Dummy Organization"
+Tagline: "testing tagline"
 Mobile: "+91-8384882675"
 Address: "Sasni Gate, Aligarh"
